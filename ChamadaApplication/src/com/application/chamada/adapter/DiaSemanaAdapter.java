@@ -3,6 +3,7 @@ package com.application.chamada.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +13,20 @@ import android.widget.TextView;
 
 import com.application.chamada.R;
 import com.application.chamada.domain.DiaSemana;
+import com.application.chamada.fragment.CadastrarHorarioFragment;
+import com.application.chamada.listener.CheckBoxListener;
 
 public class DiaSemanaAdapter extends BaseAdapter {
 
 	private Context context;
 	private List<DiaSemana> dias;
+	private FragmentManager fragmentManager;
 
-	public DiaSemanaAdapter(Context context, List<DiaSemana> dias) {
+	public DiaSemanaAdapter(Context context, List<DiaSemana> dias,
+			FragmentManager fragmentManager) {
 		setContext(context);
 		setDias(dias);
+		setFragmentManager(fragmentManager);
 	}
 
 	@Override
@@ -51,9 +57,12 @@ public class DiaSemanaAdapter extends BaseAdapter {
 		CheckBox checkBox = (CheckBox) view.findViewById(R.id.diaCheckBox);
 		TextView textView = (TextView) view.findViewById(R.id.textoCheckBox);
 
+	//		checkBox.setOnClickListener(new CheckBoxListener(getFragmentManager(),
+	//				getContext(), R.id.fragmentContainer));
+
 		checkBox.setChecked(diaSemana.isCheck());
 		textView.setText(diaSemana.getDia().getDescricao());
-		
+
 		return view;
 	}
 
@@ -71,6 +80,14 @@ public class DiaSemanaAdapter extends BaseAdapter {
 
 	public void setDias(List<DiaSemana> dias) {
 		this.dias = dias;
+	}
+
+	public FragmentManager getFragmentManager() {
+		return fragmentManager;
+	}
+
+	public void setFragmentManager(FragmentManager fragmentManager) {
+		this.fragmentManager = fragmentManager;
 	}
 
 }

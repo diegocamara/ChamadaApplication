@@ -5,7 +5,11 @@ import org.joda.time.DateTime;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -47,6 +51,8 @@ public class CadastrarDisciplinaFragment extends Fragment {
 
 		inicializar();
 
+		setHasOptionsMenu(true);
+
 		View view = (View) inflater.inflate(
 				R.layout.cadastrar_disciplina_layout, container, false);
 
@@ -75,7 +81,7 @@ public class CadastrarDisciplinaFragment extends Fragment {
 				.findViewById(R.id.diasSemanaCheckBoxesList);
 
 		diasSemana.setAdapter(new DiaSemanaAdapter(getActivity(), DiaSemanaUtil
-				.obterDiasSemanaPadrao()));
+				.obterDiasSemanaPadrao(), getActivity().getSupportFragmentManager()));
 
 		return view;
 	}
@@ -115,7 +121,8 @@ public class CadastrarDisciplinaFragment extends Fragment {
 	}
 
 	private void showDialog(int requestCode) {
-		DateDialog dateDialog = DateDialog.newInstance(obterDataInicioDisciplina(requestCode));
+		DateDialog dateDialog = DateDialog
+				.newInstance(obterDataInicioDisciplina(requestCode));
 		dateDialog.setTargetFragment(CadastrarDisciplinaFragment.this,
 				requestCode);
 		dateDialog.show(getFragmentManager(), DATEPICKER_DIALOG_FRAGMENT_TAG);
@@ -124,28 +131,42 @@ public class CadastrarDisciplinaFragment extends Fragment {
 	private DateTime obterDataInicioDisciplina(int requestCode) {
 
 		DateTime dataRetorno = DateTime.now();
-		
+
 		switch (requestCode) {
 		case DATA_INICIO_REQUEST_CODE: {
-			
+
 			if (this.disciplina.getDataInicio() != null) {
 				dataRetorno = this.disciplina.getDataInicio();
 			}
 
 			break;
 		}
-		case DATA_FIM_REQUEST_CODE:{
-			
-			if(this.disciplina.getDataFim() != null){
+		case DATA_FIM_REQUEST_CODE: {
+
+			if (this.disciplina.getDataFim() != null) {
 				dataRetorno = this.disciplina.getDataFim();
 			}
-			
+
 			break;
 		}
 		}
 
 		return dataRetorno;
-		
+
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		MenuInflater menuInflater = getActivity().getMenuInflater();
+		menu.clear();
+		menuInflater.inflate(R.menu.cadastrar_disciplina_menu, menu);
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		return super.onOptionsItemSelected(item);
 	}
 
 	private void inicializar() {

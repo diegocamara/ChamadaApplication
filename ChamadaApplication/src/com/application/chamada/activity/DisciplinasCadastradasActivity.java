@@ -1,6 +1,5 @@
 package com.application.chamada.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -24,7 +23,7 @@ public class DisciplinasCadastradasActivity extends FragmentActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater menuInflater = getMenuInflater();
-		menuInflater.inflate(R.menu.cadastrar_disciplina_menu, menu);
+		menuInflater.inflate(R.menu.operacoes_disciplina_menu, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -32,8 +31,9 @@ public class DisciplinasCadastradasActivity extends FragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
-		case R.id.adicionarNovaDisciplinaIcon: {						
-			startFragment(CadastrarDisciplinaFragment.newInstance(), R.id.fragmentContainer);
+		case R.id.adicionarNovaDisciplinaIcon: {
+			startFragment(CadastrarDisciplinaFragment.newInstance(),
+					R.id.fragmentContainer);
 			break;
 		}
 		}
@@ -41,8 +41,8 @@ public class DisciplinasCadastradasActivity extends FragmentActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void startFragment(Fragment fragment, int fragmentContainerId){
-		
+	private void startFragment(Fragment fragment, int fragmentContainerId) {
+
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		Fragment fragmentContainer = fragmentManager
 				.findFragmentById(fragmentContainerId);
@@ -53,7 +53,7 @@ public class DisciplinasCadastradasActivity extends FragmentActivity {
 					.add(fragmentContainerId, fragmentContainer)
 					.addToBackStack(null).commit();
 		}
-		
+
 	}
-	
+
 }

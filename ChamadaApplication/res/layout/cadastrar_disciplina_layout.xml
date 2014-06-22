@@ -89,4 +89,9 @@
             android:dividerHeight="10sp" />
     </RelativeLayout>
 
+     <FrameLayout       
+        android:id="@+id/fragmentContainerHorario"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    
 </LinearLayout>
