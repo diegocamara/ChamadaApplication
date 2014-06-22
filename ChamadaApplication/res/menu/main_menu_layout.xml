@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item android:id="@+id/action_menu"
+        android:icon="@drawable/ic_action_overflow"
+        android:title="@string/menu"
+        android:showAsAction="always" >
+        
+        <menu>
+            <item android:id="@+id/cadastrarDisciplina"
+                android:showAsAction="ifRoom"
+                android:title="@string/cadastrarDisciplina">
+                
+            </item>            
+        </menu>
+        
+    </item>
+
+</menu>

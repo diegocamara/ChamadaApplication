@@ -4,24 +4,32 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="19" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >        
-        <activity android:name="com.application.chamada.fragment.MainActivity" >
+        android:theme="@style/AppTheme" >
+        <activity android:name="com.application.chamada.activity.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.application.chamada.activity.DisciplinasCadastradasActivity" />
         <activity
-            android:name="com.application.chamada.acitivity.CadastrarDisciplinaActivity"
-            android:label="@string/cadastrar_disciplina" />
+            android:name="com.application.chamada.fragment.CadastrarDisciplinaFragment"
+            android:label="@string/cadastrarDisciplina" />
     </application>
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true" />
 
 </manifest>

@@ -28,7 +28,7 @@ public class DisciplinaManager extends AbstractManager implements IDisciplinaMan
 	}
 
 	@Override
-	public void salvarOuAtualizar(Disciplina disciplina) {
+	public void salvarOuAtualizar(Disciplina disciplina) {		
 		this.disciplinaDAO.getRuntimeDAO().createOrUpdate(disciplina);		
 	}
 	

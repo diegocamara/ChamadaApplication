@@ -3,16 +3,18 @@
     <string name="app_name">ChamadaApplication</string>
 
     <!-- Layout disciplina list view -->
-    <string name="disciplina_nome">Nome: </string>
+    <string name="disciplina_nome"><b>Nome</b></string>
     <string name="disciplina_inicio">Inicio: </string>
     <string name="disciplina_termino">Termino: </string>
     
-    <string name="cadastrar_disciplina">Cadastrar Disciplina</string>
-    <string name="data_inicio">Data de inicio:</string>
-    <string name="data_fim">Data de fim:</string>
-    <string name="data_nao_definida">Definir</string>
-    <string name="dias_semana">Dias da semana:</string>
+    <string name="cadastrarDisciplina">Cadastrar Disciplina</string>
+    <string name="data_inicio"><b>Data de inicio:</b></string>
+    <string name="data_fim"><b>Data de fim:</b></string>
+    <string name="data_nao_definida">definir</string>
+    <string name="dias_semana"><b>Dias da semana:</b></string>
     
-    <string name="addDisciplinaButton">Cadastrar nova disciplina</string>
+    <string name="menu">Menu</string>    
+    
+    <string name="addDisciplinaIcon">Cadastrar nova disciplina</string>
 
 </resources>

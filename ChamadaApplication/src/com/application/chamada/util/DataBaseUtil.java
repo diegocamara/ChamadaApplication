@@ -12,7 +12,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 public class DataBaseUtil extends OrmLiteSqliteOpenHelper {
-
+		
 	private static final String DATABASE_NAME = "chamada.db";
 
 	private static final String DATABASE_CATEGORY = "database";
@@ -32,6 +32,7 @@ public class DataBaseUtil extends OrmLiteSqliteOpenHelper {
 		try {
 			for (Class clazz : entitys) {
 				TableUtils.createTableIfNotExists(connectionSource, clazz);
+				Log.i(DATABASE_CATEGORY, clazz.getName() + " criada.");
 			}
 		} catch (SQLException ex) {
 			throw new RuntimeException();
