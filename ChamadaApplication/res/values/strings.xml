@@ -8,6 +8,7 @@
     <string name="disciplina_termino">Termino: </string>
     
     <string name="cadastrarDisciplina">Cadastrar Disciplina</string>
+    <string name="cadastrarDias">Cadastrar Dias</string>
     <string name="data_inicio"><b>Data de inicio:</b></string>
     <string name="data_fim"><b>Data de fim:</b></string>
     <string name="data_nao_definida">definir</string>

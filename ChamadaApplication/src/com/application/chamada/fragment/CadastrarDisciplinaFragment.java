@@ -13,16 +13,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.application.chamada.R;
-import com.application.chamada.adapter.DiaSemanaAdapter;
 import com.application.chamada.domain.Disciplina;
 import com.application.chamada.manager.DisciplinaManager;
 import com.application.chamada.manager.IHorarioManager;
 import com.application.chamada.util.DateUtils;
-import com.application.chamada.util.DiaSemanaUtil;
 
 public class CadastrarDisciplinaFragment extends Fragment {
 
@@ -76,12 +73,6 @@ public class CadastrarDisciplinaFragment extends Fragment {
 				showDialog(DATA_FIM_REQUEST_CODE);
 			}
 		});
-
-		ListView diasSemana = (ListView) view
-				.findViewById(R.id.diasSemanaCheckBoxesList);
-
-		diasSemana.setAdapter(new DiaSemanaAdapter(getActivity(), DiaSemanaUtil
-				.obterDiasSemanaPadrao(), getActivity().getSupportFragmentManager()));
 
 		return view;
 	}
@@ -165,8 +156,29 @@ public class CadastrarDisciplinaFragment extends Fragment {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
+
+		switch (item.getItemId()) {
+		case R.id.confirmarDisciplina: {
+			startFragment(CadastrarHorarioFragment.newInstance(),
+					R.id.fragmentContainer);
+		}
+		}
+
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void startFragment(Fragment fragment, int fragmentContainerId) {
+
+		FragmentManager fragmentManager = getFragmentManager();
+		Fragment fragmentContainer = fragmentManager
+				.findFragmentById(fragmentContainerId);
+		
+			fragmentContainer = fragment;
+			fragmentManager.beginTransaction()
+					.replace(fragmentContainerId, fragmentContainer)
+					.addToBackStack(null).commit();
+		
+
 	}
 
 	private void inicializar() {

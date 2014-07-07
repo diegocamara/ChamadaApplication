@@ -23,6 +23,9 @@
         <activity
             android:name="com.application.chamada.fragment.CadastrarDisciplinaFragment"
             android:label="@string/cadastrarDisciplina" />
+        <activity
+            android:name="com.application.chamada.fragment.CadastrarHorarioFragment"
+            android:label="@string/cadastrarDias"/>
     </application>
 
     <supports-screens
