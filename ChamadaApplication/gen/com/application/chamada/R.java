@@ -18,10 +18,11 @@ public final class R {
     }
     public static final class id {
         public static final int LinearLayoutTab=0x7f070010;
-        public static final int action_menu=0x7f070013;
-        public static final int adicionarNovaDisciplinaIcon=0x7f070015;
-        public static final int cadastrarDisciplina=0x7f070014;
-        public static final int confirmarDisciplina=0x7f070012;
+        public static final int action_menu=0x7f070014;
+        public static final int adicionarNovaDisciplinaIcon=0x7f070016;
+        public static final int cadastrarDisciplina=0x7f070015;
+        public static final int confirmarDisciplina=0x7f070013;
+        public static final int confirmarHorario=0x7f070012;
         public static final int dataFimNaoDefinida=0x7f070003;
         public static final int dataInicioNaoDefinida=0x7f070002;
         public static final int diaCheckBox=0x7f070005;
@@ -53,9 +54,10 @@ public final class R {
         public static final int tab_host=0x7f030009;
     }
     public static final class menu {
-        public static final int cadastrar_disciplina_menu=0x7f060000;
-        public static final int main_menu_layout=0x7f060001;
-        public static final int operacoes_disciplina_menu=0x7f060002;
+        public static final int cadastrar_dia_semana_menu=0x7f060000;
+        public static final int cadastrar_disciplina_menu=0x7f060001;
+        public static final int main_menu_layout=0x7f060002;
+        public static final int operacoes_disciplina_menu=0x7f060003;
     }
     public static final class string {
         public static final int addDisciplinaIcon=0x7f04000e;

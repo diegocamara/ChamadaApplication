@@ -2,10 +2,13 @@ package com.application.chamada.fragment;
 
 import org.joda.time.DateTime;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.application.chamada.R;
@@ -26,10 +30,11 @@ public class CadastrarDisciplinaFragment extends Fragment {
 	private static final int DATA_INICIO_REQUEST_CODE = 1;
 	private static final int DATA_FIM_REQUEST_CODE = 2;
 	private static final String DATEPICKER_DIALOG_FRAGMENT_TAG = "datepicker_dialog_fragment";
+	public static final String DISCIPLINA = "DISCIPLINA";
 
 	private TextView textDataInicioNaoDefinida;
-	private TextView textDataFimNaoDefinida;
-
+	private TextView textDataFimNaoDefinida;	
+	
 	private Disciplina disciplina;
 
 	private DisciplinaManager disciplinaManager;
@@ -46,13 +51,37 @@ public class CadastrarDisciplinaFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		inicializar();
+		inicializar(getActivity());
 
 		setHasOptionsMenu(true);
 
 		View view = (View) inflater.inflate(
 				R.layout.cadastrar_disciplina_layout, container, false);
 
+		EditText nomeDisciplinaView = (EditText) view.findViewById(R.id.disciplinaNomeEditText);
+		
+		
+		nomeDisciplinaView.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				getDisciplina().setNome(s.toString());				
+			}
+		});
+		
 		textDataInicioNaoDefinida = (TextView) view
 				.findViewById(R.id.dataInicioNaoDefinida);
 		textDataInicioNaoDefinida.setOnClickListener(new OnClickListener() {
@@ -159,6 +188,10 @@ public class CadastrarDisciplinaFragment extends Fragment {
 
 		switch (item.getItemId()) {
 		case R.id.confirmarDisciplina: {
+			
+			this.disciplinaManager.salvarOuAtualizar(disciplina);
+			getArguments().putSerializable(DISCIPLINA, disciplina);
+			
 			startFragment(CadastrarHorarioFragment.newInstance(),
 					R.id.fragmentContainer);
 		}
@@ -181,8 +214,9 @@ public class CadastrarDisciplinaFragment extends Fragment {
 
 	}
 
-	private void inicializar() {
+	private void inicializar(Context context) {
 		this.disciplina = new Disciplina();
+		this.disciplinaManager = new DisciplinaManager(context);
 	}
 
 	public Disciplina getDisciplina() {
