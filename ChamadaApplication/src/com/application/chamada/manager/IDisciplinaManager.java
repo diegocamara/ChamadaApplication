@@ -13,4 +13,6 @@ public interface IDisciplinaManager {
 	Disciplina find(Disciplina disciplina);
 	
 	List<Disciplina> consultarDisciplinasDoDia(DateTime dataAtual);
+	
+	List<Disciplina> consultarDisciplinas();
 }

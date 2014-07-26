@@ -1,10 +1,15 @@
 package com.application.chamada.domain;
 
-public class DiaSemana {
 
+public class DiaSemana {
+	
 	private DiaSemanaEnum dia;
 	private boolean check;
 
+	public DiaSemana(DiaSemanaEnum diaSemanaEnum){
+		setDia(diaSemanaEnum);
+	}
+	
 	public DiaSemana(DiaSemanaEnum diaSemanaEnum, boolean isCheck){
 		setDia(diaSemanaEnum);
 		setCheck(isCheck);

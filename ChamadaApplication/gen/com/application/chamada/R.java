@@ -30,8 +30,8 @@ public final class R {
         public static final int diasSemanaCheckBoxesList=0x7f070000;
         public static final int disciplinaListView=0x7f07000f;
         public static final int disciplinaNomeEditText=0x7f070001;
-        public static final int disciplinasCadastradasListView=0x7f07000d;
-        public static final int fragmentContainer=0x7f07000e;
+        public static final int disciplinasCadastradasListView=0x7f07000e;
+        public static final int fragmentContainer=0x7f07000d;
         public static final int fragmentContainerHorario=0x7f070004;
         public static final int horaFim=0x7f07000c;
         public static final int horaFimId=0x7f070008;
@@ -48,10 +48,11 @@ public final class R {
         public static final int dia_semana_layout=0x7f030003;
         public static final int dialog_date=0x7f030004;
         public static final int disciplina_list_layout=0x7f030005;
-        public static final int disciplinas_cadastradas_layout=0x7f030006;
-        public static final int disciplinas_dia_layout=0x7f030007;
-        public static final int main_window_layout=0x7f030008;
-        public static final int tab_host=0x7f030009;
+        public static final int disciplinas_cadastradas_frame_container=0x7f030006;
+        public static final int disciplinas_cadastradas_layout=0x7f030007;
+        public static final int disciplinas_dia_layout=0x7f030008;
+        public static final int main_window_layout=0x7f030009;
+        public static final int tab_host=0x7f03000a;
     }
     public static final class menu {
         public static final int cadastrar_dia_semana_menu=0x7f060000;

@@ -1,22 +1,40 @@
 package com.application.chamada.activity;
 
+import java.util.List;
+
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import com.application.chamada.R;
-import com.application.chamada.fragment.CadastrarDisciplinaFragment;
+import com.application.chamada.adapter.DisciplinaDetalhesAdapter;
+import com.application.chamada.domain.Disciplina;
+import com.application.chamada.manager.DisciplinaManager;
 
 public class DisciplinasCadastradasActivity extends FragmentActivity {
+
+	private DisciplinaManager disciplinaManager;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
+
+		inicializar(getApplicationContext());
+
 		setContentView(R.layout.disciplinas_cadastradas_layout);
+
+		ListView disciplinasListView = (ListView) findViewById(R.id.disciplinasCadastradasListView);
+
+		List<Disciplina> disciplinas = getDisciplinaManager()
+				.consultarDisciplinas();
+
+		disciplinasListView.setAdapter(new DisciplinaDetalhesAdapter(
+				getApplicationContext(), disciplinas));
 
 	}
 
@@ -32,8 +50,9 @@ public class DisciplinasCadastradasActivity extends FragmentActivity {
 
 		switch (item.getItemId()) {
 		case R.id.adicionarNovaDisciplinaIcon: {
-			startFragment(CadastrarDisciplinaFragment.newInstance(),
-					R.id.fragmentContainer);
+
+			startActivity(new Intent(getApplicationContext(),
+					CadastrarDisciplinasFrameActivity.class));
 			break;
 		}
 		}
@@ -41,19 +60,16 @@ public class DisciplinasCadastradasActivity extends FragmentActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void startFragment(Fragment fragment, int fragmentContainerId) {
+	private void inicializar(Context context) {
+		this.disciplinaManager = new DisciplinaManager(context);
+	}
 
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		Fragment fragmentContainer = fragmentManager
-				.findFragmentById(fragmentContainerId);
+	public DisciplinaManager getDisciplinaManager() {
+		return disciplinaManager;
+	}
 
-		if (fragmentContainer == null) {
-			fragmentContainer = fragment;
-			fragmentManager.beginTransaction()
-					.add(fragmentContainerId, fragmentContainer)
-					.addToBackStack(null).commit();
-		}
-
+	public void setDisciplinaManager(DisciplinaManager disciplinaManager) {
+		this.disciplinaManager = disciplinaManager;
 	}
 
 }

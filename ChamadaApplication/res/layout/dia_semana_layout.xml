@@ -15,19 +15,22 @@
         android:id="@+id/textoCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp" />
+        android:layout_marginLeft="20dp"
+        android:textSize="18sp" />
 
     <TextView android:id="@+id/horaInicioId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:text="@string/hora_inicio" />
+        android:text="@string/hora_inicio"
+        android:textSize="18sp" />
     
     <TextView
         android:id="@+id/horaFimId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:text="@string/hora_fim" />
+        android:text="@string/hora_fim"
+        android:textSize="18sp" />
 
 </LinearLayout>

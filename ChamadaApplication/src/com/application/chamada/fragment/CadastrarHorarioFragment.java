@@ -1,7 +1,9 @@
 package com.application.chamada.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.joda.time.DateTime;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,11 +15,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.application.chamada.R;
 import com.application.chamada.adapter.DiaSemanaAdapter;
+import com.application.chamada.domain.DiaSemanaEnum;
+import com.application.chamada.domain.Disciplina;
 import com.application.chamada.domain.Horario;
 import com.application.chamada.manager.HorarioManager;
 import com.application.chamada.manager.IHorarioManager;
@@ -26,12 +32,14 @@ import com.application.chamada.util.DiaSemanaUtil;
 public class CadastrarHorarioFragment extends Fragment {
 
 	private static final int ZERO = 0;
+	private Disciplina disciplina;
 	private ListView dias;
-	private List<Horario> horarios;
+	private Map<DiaSemanaEnum, Horario> horarios;
 	private IHorarioManager horarioManager;
 
-	public static CadastrarHorarioFragment newInstance() {
+	public static CadastrarHorarioFragment newInstance(Disciplina disciplina) {
 		Bundle bundle = new Bundle();
+		bundle.putSerializable(Disciplina.DISCIPLINA_KEY, disciplina);
 		CadastrarHorarioFragment cadastrarHorarioFragment = new CadastrarHorarioFragment();
 		cadastrarHorarioFragment.setArguments(bundle);
 		return cadastrarHorarioFragment;
@@ -43,6 +51,8 @@ public class CadastrarHorarioFragment extends Fragment {
 
 		inicializar(getActivity());
 
+		configurarDisciplina(getArguments());
+
 		setHasOptionsMenu(true);
 
 		View view = (View) inflater.inflate(
@@ -51,7 +61,7 @@ public class CadastrarHorarioFragment extends Fragment {
 
 		dias.setAdapter(new DiaSemanaAdapter(getActivity(), DiaSemanaUtil
 				.obterDiasSemanaPadrao(), getFragmentManager(),
-				CadastrarHorarioFragment.this));
+				CadastrarHorarioFragment.this, horarios));
 
 		return view;
 	}
@@ -69,7 +79,12 @@ public class CadastrarHorarioFragment extends Fragment {
 
 		switch (item.getItemId()) {
 		case R.id.confirmarHorario: {
-
+			if(validarHorarios()){
+				salvarHorarios();
+				getActivity().finish();
+			}else{
+				Toast.makeText(getActivity(), "Existem horarios indefinidos!", Toast.LENGTH_SHORT).show();
+			}
 			break;
 		}
 		}
@@ -77,15 +92,81 @@ public class CadastrarHorarioFragment extends Fragment {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private List<Horario> obterListaHorarioConfigurada(ListView listaHorarios) {
+	private boolean validarHorarios() {
 
-		List<Horario> horarios = new ArrayList<Horario>();
+		boolean resultado = true;
 		
-		for(int i = ZERO; i < 7; i++){
-			View view = listaHorarios.getChildAt(i);
+		if (getHorarios().size() > 0) {
+
+			for (Map.Entry<DiaSemanaEnum, Horario> entry : getHorarios()
+					.entrySet()) {
+
+				Horario horario = entry.getValue();
+
+				if (isNull(horario.getDia())
+						|| isNull(horario.getHoraInicio())
+						|| isNull(horario.getHoraFim())) {					
+					resultado = false;
+					break;
+				}
+
+			}
+
+		}else{
+			resultado = false;
 		}
 		
-		return null;
+		
+		return resultado;
+	}
+
+	private void salvarHorarios(){
+		for(Map.Entry<DiaSemanaEnum, Horario> entry : getHorarios().entrySet()){
+			getHorarioManager().salvarOuAtualizar(entry.getValue());
+			Toast.makeText(getActivity(), disciplina.getNome() + " salva." , Toast.LENGTH_SHORT).show();
+		}
+	}
+	
+	private void configurarDisciplina(Bundle bundle) {
+
+		if (isNotNull(bundle)) {
+			this.disciplina = (Disciplina) bundle
+					.getSerializable(Disciplina.DISCIPLINA_KEY);
+		}
+
+	}
+
+	private void configurarListaHorario(int hora, int minutos, int position,
+			int requestCode) {
+
+		Horario horario = new Horario();
+		
+		if(getHorarios().get(DiaSemanaEnum.obterDiaSemanaPorIndex(position)) != null){
+			horario = getHorarios().get(DiaSemanaEnum.obterDiaSemanaPorIndex(position));
+		}
+		
+		horario.setDisciplina(disciplina);
+		horario.setDia(DiaSemanaEnum.obterDiaSemanaPorIndex(position));
+
+		int ano = DateTime.now().getYear();
+		int mes = DateTime.now().getMonthOfYear();
+		int dia = DateTime.now().getDayOfMonth();
+
+		DateTime dateTime = new DateTime(ano, mes, dia, hora, minutos);
+
+		switch (requestCode) {
+		case HourDialog.HORA_INICIO_REQUEST_CODE: {
+			horario.setHoraInicio(dateTime);
+			break;
+		}
+		case HourDialog.HORA_FIM_REQUEST_CODE: {
+			horario.setHoraFim(dateTime);
+			break;
+		}
+		}		
+		
+		getHorarios().put(horario.getDia(), horario);
+
 	}
 
 	@Override
@@ -109,11 +190,13 @@ public class CadastrarHorarioFragment extends Fragment {
 
 		configurarHora(hora, minutos, view, requestCode);
 
+		configurarListaHorario(hora, minutos, position, requestCode);
+
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	private void inicializar(Context context) {
-		this.horarios = new ArrayList<Horario>();
+		this.horarios = new HashMap<DiaSemanaEnum, Horario>();
 		this.horarioManager = new HorarioManager(context);
 	}
 
@@ -135,15 +218,20 @@ public class CadastrarHorarioFragment extends Fragment {
 		}
 		}
 
+		CheckBox checkBox = getView(R.id.diaCheckBox, view);
+		checkBox.setChecked(true);
 	}
 
 	private <Type> Type getView(int viewId, View view) {
-
 		return (Type) view.findViewById(viewId);
 	}
 
 	public boolean isNotNull(Object object) {
 		return object != null;
+	}
+	
+	public boolean isNull(Object object){
+		return object == null;
 	}
 
 	public ListView getDias() {
@@ -154,11 +242,11 @@ public class CadastrarHorarioFragment extends Fragment {
 		this.dias = dias;
 	}
 
-	public List<Horario> getHorarios() {
+	public Map<DiaSemanaEnum, Horario> getHorarios() {
 		return horarios;
 	}
 
-	public void setHorarios(List<Horario> horarios) {
+	public void setHorarios(Map<DiaSemanaEnum, Horario> horarios) {
 		this.horarios = horarios;
 	}
 
@@ -168,6 +256,14 @@ public class CadastrarHorarioFragment extends Fragment {
 
 	public void setHorarioManager(IHorarioManager horarioManager) {
 		this.horarioManager = horarioManager;
+	}
+
+	public Disciplina getDisciplina() {
+		return disciplina;
+	}
+
+	public void setDisciplina(Disciplina disciplina) {
+		this.disciplina = disciplina;
 	}
 
 }

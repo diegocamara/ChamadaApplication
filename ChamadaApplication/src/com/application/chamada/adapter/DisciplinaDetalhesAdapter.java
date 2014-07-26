@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.application.chamada.R;
 import com.application.chamada.domain.Disciplina;
+import com.application.chamada.util.DateUtils;
 
 public class DisciplinaDetalhesAdapter extends BaseAdapter {
 
@@ -51,11 +52,10 @@ public class DisciplinaDetalhesAdapter extends BaseAdapter {
 		TextView nomeDisciplina = (TextView)view.findViewById(R.id.nome_disciplina);
 		TextView horaInicio = (TextView)view.findViewById(R.id.horaInicio);
 		TextView horaFim = (TextView)view.findViewById(R.id.horaFim);
-		
-		//List<Horario> list = new ArrayList<Horario>(disciplina.getHorarios());
-		
+						
 		nomeDisciplina.setText(disciplina.getNome());
-		//horaInicio.setText(list.get(0).getHoraInicio());
+		horaInicio.setText(DateUtils.obterDescricaoData(disciplina.getDataInicio()));
+		horaFim.setText(DateUtils.obterDescricaoData(disciplina.getDataFim()));
 		
 		return view;
 	}

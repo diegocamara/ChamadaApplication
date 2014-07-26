@@ -3,9 +3,9 @@
     <string name="app_name">ChamadaApplication</string>
 
     <!-- Layout disciplina list view -->
-    <string name="disciplina_nome"><b>Nome</b></string>
-    <string name="disciplina_inicio">Inicio: </string>
-    <string name="disciplina_termino">Termino: </string>
+    <string name="disciplina_nome"><b>Nome: </b></string>
+    <string name="disciplina_inicio"><b>Inicio: </b></string>
+    <string name="disciplina_termino"><b>Termino: </b></string>
     
     <string name="cadastrarDisciplina">Cadastrar Disciplina</string>
     <string name="cadastrarDias">Cadastrar Dias</string>

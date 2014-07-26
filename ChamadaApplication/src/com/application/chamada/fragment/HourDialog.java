@@ -14,10 +14,10 @@ import android.widget.TimePicker;
 
 public class HourDialog extends DialogFragment implements OnTimeSetListener {
 
-	public static final String HORA = "HORA";
-	public static final String MINUTOS = "MINUTOS";
-	public static final String POSITION = "POSITION";
-	public static final String HORA_TAG = "timepicker_dialog_fragment";
+	public static final String HORA = "hora";
+	public static final String MINUTOS = "minutos";
+	public static final String POSITION = "position";
+	public static final String HORA_TAG = "hora_tag";
 	public static final int HORA_INICIO_REQUEST_CODE = 1;
 	public static final int HORA_FIM_REQUEST_CODE = 2;
 
@@ -26,9 +26,9 @@ public class HourDialog extends DialogFragment implements OnTimeSetListener {
 	private int position;
 
 	public static HourDialog newInstance(int position) {
-		
+
 		HourDialog hourDialog = new HourDialog();
-		hourDialog.setPosition(position);		
+		hourDialog.setPosition(position);
 
 		return hourDialog;
 	}
@@ -91,6 +91,4 @@ public class HourDialog extends DialogFragment implements OnTimeSetListener {
 		this.position = position;
 	}
 
-	
-	
 }

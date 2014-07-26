@@ -16,6 +16,8 @@ import com.j256.ormlite.table.DatabaseTable;
 public class Disciplina implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	public static final String DISCIPLINA_KEY = "disciplina";
 
 	public static final String CODIGO = "CODIGO";
 	public static final String NOME = "NOME";

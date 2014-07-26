@@ -42,4 +42,9 @@ public class DisciplinaManager extends AbstractManager implements IDisciplinaMan
 		return this.disciplinaDAO.consultarDisciplinasDoDia(dataAtual);
 	}
 
+	@Override
+	public List<Disciplina> consultarDisciplinas() {		
+		return this.disciplinaDAO.consultarDisciplinas();
+	}
+
 }

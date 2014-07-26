@@ -18,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.application.chamada.R;
 import com.application.chamada.domain.Disciplina;
@@ -33,8 +34,8 @@ public class CadastrarDisciplinaFragment extends Fragment {
 	public static final String DISCIPLINA = "DISCIPLINA";
 
 	private TextView textDataInicioNaoDefinida;
-	private TextView textDataFimNaoDefinida;	
-	
+	private TextView textDataFimNaoDefinida;
+
 	private Disciplina disciplina;
 
 	private DisciplinaManager disciplinaManager;
@@ -58,30 +59,31 @@ public class CadastrarDisciplinaFragment extends Fragment {
 		View view = (View) inflater.inflate(
 				R.layout.cadastrar_disciplina_layout, container, false);
 
-		EditText nomeDisciplinaView = (EditText) view.findViewById(R.id.disciplinaNomeEditText);
-		
-		
+		EditText nomeDisciplinaView = (EditText) view
+				.findViewById(R.id.disciplinaNomeEditText);
+
 		nomeDisciplinaView.addTextChangedListener(new TextWatcher() {
-			
+
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void afterTextChanged(Editable s) {
-				getDisciplina().setNome(s.toString());				
+				getDisciplina().setNome(s.toString());
 			}
 		});
-		
+
 		textDataInicioNaoDefinida = (TextView) view
 				.findViewById(R.id.dataInicioNaoDefinida);
 		textDataInicioNaoDefinida.setOnClickListener(new OnClickListener() {
@@ -188,16 +190,37 @@ public class CadastrarDisciplinaFragment extends Fragment {
 
 		switch (item.getItemId()) {
 		case R.id.confirmarDisciplina: {
-			
-			this.disciplinaManager.salvarOuAtualizar(disciplina);
-			getArguments().putSerializable(DISCIPLINA, disciplina);
-			
-			startFragment(CadastrarHorarioFragment.newInstance(),
-					R.id.fragmentContainer);
+
+			if (isDisciplinaValida(disciplina)) {
+				this.disciplinaManager.salvarOuAtualizar(disciplina);
+				getArguments().putSerializable(DISCIPLINA, disciplina);
+				startFragment(CadastrarHorarioFragment.newInstance(disciplina),
+						R.id.fragmentContainer);
+			} else {
+				Toast.makeText(getActivity(),
+						"Alguns campos não estam definidos!",
+						Toast.LENGTH_SHORT).show();
+			}
+
 		}
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	private boolean isDisciplinaValida(Disciplina disciplina) {
+		boolean resultado = true;
+
+		if (isNull(disciplina.getDataInicio())
+				|| isNull(disciplina.getDataFim())
+				|| isNull(disciplina.getNome())) {
+			resultado = false;
+		}
+		return resultado;
+	}
+
+	private boolean isNull(Object object) {
+		return object == null;
 	}
 
 	private void startFragment(Fragment fragment, int fragmentContainerId) {
@@ -205,12 +228,11 @@ public class CadastrarDisciplinaFragment extends Fragment {
 		FragmentManager fragmentManager = getFragmentManager();
 		Fragment fragmentContainer = fragmentManager
 				.findFragmentById(fragmentContainerId);
-		
-			fragmentContainer = fragment;
-			fragmentManager.beginTransaction()
-					.replace(fragmentContainerId, fragmentContainer)
-					.addToBackStack(null).commit();
-		
+
+		fragmentContainer = fragment;
+		fragmentManager.beginTransaction()
+				.replace(fragmentContainerId, fragmentContainer)
+				.addToBackStack(null).commit();
 
 	}
 

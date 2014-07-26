@@ -71,7 +71,7 @@ public class Horario {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(this.codigo).toHashCode();
+		return new HashCodeBuilder().append(this.dia).toHashCode();
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class Horario {
 
 		if (obj instanceof Horario) {
 			final Horario horario = (Horario) obj;
-			return new EqualsBuilder().append(this.codigo, horario.getCodigo())
+			return new EqualsBuilder().append(this.dia, horario.getDia())
 					.isEquals();
 		} else {
 			return false;
